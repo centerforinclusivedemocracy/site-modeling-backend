@@ -562,7 +562,12 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, st
             # No GTFS available, save empty file with header to csv
             # Do this here, because header is lost in checking against county boundary
             # and we need header for the website
+            transit_df = transit_df.drop(['id', 'geometry'], axis=1)
             transit_df.to_csv(transit_stops_csv, index=False)
+            
+            transit_df = transit_df.drop(['provider', 'num_stops_per_week', 'score'], axis=1) 
+            transit_df.to_csv(transit_stops_latlon_csv, index=False)
+            
             transit_count_after = 0
         else:
             # Use county var that was already created in step 11    
