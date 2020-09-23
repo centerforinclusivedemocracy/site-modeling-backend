@@ -147,6 +147,12 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, st
     shp_rename = {} # Rename input indicator data to this, for shp
     col_retain_set = set() # Retain these columns from input indicator data
     
+    # Support native american populations for AZ, only in indicator tract displays
+    if state == "az":
+        wv.indic_field_map['pct_native'] = ["prc_native", "pr_nat", "population",\
+                     "Percent Native America Population", \
+                     "The percentage of the population that is Native American."]
+
     for k,v in wv.indic_field_map.items():
         csv_rename.update({k:v[0]})
         shp_rename.update({v[0]:v[1]})
