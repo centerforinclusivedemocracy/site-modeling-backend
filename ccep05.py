@@ -212,9 +212,9 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip
     # capacity for 3-day sites is in ccep_datavars, because it changes by county for CA
 	
     capacity_dropbox = 40000 # default for all counties
-    if county_name == "los_angeles": # overwrite only for LA
+    if state == "ca" and county_name == "los_angeles": # overwrite only for LA
         capacity_dropbox = 80000 # To allow the model to complete without memory errors
-    if county_name == "maricopa": 
+    if state == "az" and county_name == "maricopa": 
         capacity_dropbox = 500000 
 
     capacity_tenday = 75000
@@ -225,7 +225,7 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip
     # Client doesn't recall source of CA values, and confirmed it is ok to bump up CO value
     if state == "co":
         capacity_tenday = 129000    
-    if county_name == "maricopa": 
+    if state == "az" and county_name == "maricopa": 
         capacity_tenday = 200000 
     
     # Creates a dict of site ids, and assigns county's capacity to each

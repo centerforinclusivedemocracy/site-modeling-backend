@@ -189,7 +189,7 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip
     print(f"{u.getTimeNowStr()} Run: {desc}")
     
     # For LA, we need to reduce the size of the distance matrix, by reducing the number of sites.
-    if county_name == "los_angeles":
+    if state == "ca" and county_name == "los_angeles":
         min_pop = 50
         print("Using higher min population for LA to reduce size of distance matrix")
     else:
@@ -229,7 +229,7 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip
         # If Q4 is included, the dataset will increase to include sites with selected POI types, 
         # that didn't meet other criteria
         # Don't include q4 for LA to reduce the size of the distance matrix
-        if county_name == "los_angeles":
+        if state == "ca" and county_name == "los_angeles":
             limit_query = (q1 | q2 | q3)
             print("Skipping q4 for LA to reduce size of distance matrix")
         else:

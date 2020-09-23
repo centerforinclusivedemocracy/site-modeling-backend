@@ -91,7 +91,7 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip
     # Note from DK: We always want a certain amount of variation in the clusters, 
     # so even if the voting population onlys supports a low number - we set a minimum of 30
     # E.g. if derived = 11 , then we pick 30. If derived = 79 then we pick 79.
-    if county_name == "los_angeles":
+    if state == "ca" and county_name == "los_angeles":
         population_threshold = 15000 # To reduce size of distance matrix for LA
         print("Using higher population threshold for LA to reduce size of distance matrix")
     else:
