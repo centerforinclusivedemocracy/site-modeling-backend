@@ -59,7 +59,7 @@ def round_df_decimals(df, col_list, dec_places):
     return df
     
 
-def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, state_srid, ip_path, state_code, plot=False): 
+def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, state_srid, ip_path, state_code, mts_in_pt05mile, plot=False): 
     
     # ========================================================
     # Set up variables
@@ -399,16 +399,17 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, st
     print(f"{u.getTimeNowStr()} Run: {desc}")    
     
     centroid_file = f"{state}_{county_code}_final_centroid_buffer"
+    half_length_of_side = int(mts_in_pt05mile)/2
 
-    # Create buffered circles around suitable sites
+    # Create 800m squares around suitable sites, to match the squares on the website
     # _suitable_sites_processed_final is created in CCEP3
-    # 400m is the radius of the circle, so that it fits within the 800m processing grid
+    # 800m square length is picked to match the dimensions of the processing grid    
     qry_txt = f"""
         drop table if exists {fssl}.{centroid_file};
         create table {fssl}.{centroid_file} as
-        select idnum, 
-            st_buffer(st_transform(st_centroid(geom),{state_srid}),400) geom 
-        from {fssl}.{state}_{county_code}_suitable_sites_processed_final
+        select sites.idnum,             
+            st_transform(ST_Expand(st_transform(sites.geom, {state_srid}):: geometry, {half_length_of_side}),{state_srid}) geom
+        from {fssl}.{state}_{county_code}_suitable_sites_processed_final as sites
     """
     db.qry(qry_txt)
     

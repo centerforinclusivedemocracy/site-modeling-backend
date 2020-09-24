@@ -120,7 +120,7 @@ if __name__ == '__main__':
                 elif module == "CCEP5":
                     ccep05.run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, ip_path, county_capacity, county_site_override, plot=displayPlot) 
                 elif module == "CCEP6":
-                    ccep06.run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, state_srid, ip_path, state_code, plot=displayPlot)
+                    ccep06.run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, state_srid, ip_path, state_code, mts_in_pt05mile, plot=displayPlot)
                 else:
                     print("Unsupported module specified. Please set 'modules_to_run' to be one or more of CCEP1 - CCEP6")
 
