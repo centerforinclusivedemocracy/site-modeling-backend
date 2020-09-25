@@ -352,7 +352,9 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, st
 
     desc = "12 - Create the small square symbols for the map" 
     print(f"{u.getTimeNowStr()} Run: {desc}")
-        
+    # We don't need this after the website was updated to use hatching instead
+    # of the black squares. Leaving it in here for future reference, just in case!
+    '''    
     # The 150m unit is for the unreliability squares
     centroid_file = f"{county_name}_tract_centroid_{state_srid}"
     qry_txt = f"""
@@ -369,6 +371,7 @@ def run_module(db, state, county_name, county_code, op_path, srid, ssl, fssl, st
     
     tract_centroid_squares = u.make_gpd(db.table2df(ssl, centroid_file), srid)
     tract_centroid_squares.to_file(tract_squares_json,driver='GeoJSON')
+    '''
 
 
     desc = "13 - Generate POI csv files" 
